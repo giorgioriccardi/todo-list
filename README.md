@@ -30,4 +30,23 @@ function addTask(e) {
   e.preventDefault();
 }
 ```
-* 
+* Create Li element
+```
+function addTask(e) {
+  if(taskInput.value === '') {
+    alert('Task is missing');
+    return;
+  }
+
+  // Create <li></li> element
+  const li = document.createElement('li');
+  const taskText = document.createTextNode(taskInput.value);
+  
+  li.className = 'collection-item';
+  li.appendChild(taskText);
+
+  taskList.appendChild(li);
+
+  e.preventDefault();
+}
+```

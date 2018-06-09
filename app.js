@@ -17,6 +17,8 @@ function loadEventListeners() {
 function addTask(e) {
   if(taskInput.value === '') {
     alert('Task is missing');
+    // prevent creation of an empty node
+    return;
   }
 
   // Create <li></li> element
