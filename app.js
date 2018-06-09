@@ -19,5 +19,18 @@ function addTask(e) {
     alert('Task is missing');
   }
 
+  // Create <li></li> element
+  const li = document.createElement('li');
+  const taskText = document.createTextNode(taskInput.value);
+  // Add a class
+  li.className = 'collection-item';
+  // Create textNode and append to li
+  li.appendChild(taskText);
+  console.log(taskText);
+  console.log(li);
+
+  // Add li to ul parent
+  taskList.appendChild(li);
+
   e.preventDefault();
 }
