@@ -30,7 +30,7 @@ function addTask(e) {
   e.preventDefault();
 }
 ```
-* Create Li element
+* Create Li element and prevent empty li on Add Task link without text
 ```
 function addTask(e) {
   if(taskInput.value === '') {
@@ -50,3 +50,29 @@ function addTask(e) {
   e.preventDefault();
 }
 ```
+* Display Task and Remove X link
+```
+function addTask(e) {
+  if(taskInput.value === '') {
+    alert('Task is missing');
+    return;
+  }
+
+  const li = document.createElement('li');
+  const taskText = document.createTextNode(taskInput.value);
+  const link = document.createElement('a');
+
+  li.className = 'collection-item';
+  li.appendChild(taskText);
+  link.className = 'delete-item secondary-content';
+  link.innerHTML = '<i class="fa fa-remove"></i>';
+  li.appendChild(link);
+
+  taskList.appendChild(li);
+
+  taskInput.value = '';
+
+  e.preventDefault();
+}
+```
+* 

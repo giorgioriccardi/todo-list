@@ -21,18 +21,29 @@ function addTask(e) {
     return;
   }
 
-  // Create <li></li> element
+  // Create li+link element
   const li = document.createElement('li');
   const taskText = document.createTextNode(taskInput.value);
+  const link = document.createElement('a');
+
   // Add a class
   li.className = 'collection-item';
   // Create textNode and append to li
   li.appendChild(taskText);
   console.log(taskText);
   console.log(li);
+  // Create link remove X
+  link.className = 'delete-item secondary-content'; // Materialize CSS
+  // Add FA icon X
+  link.innerHTML = '<i class="fa fa-remove"></i>'; // x
+  // Append remove link to li
+  li.appendChild(link);
 
   // Add li to ul parent
   taskList.appendChild(li);
+
+  // Clear input or X won't display
+  taskInput.value = '';
 
   e.preventDefault();
 }
