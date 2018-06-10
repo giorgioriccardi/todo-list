@@ -38,7 +38,6 @@ function addTask(e) {
     return;
   }
 
-  // Create <li></li> element
   const li = document.createElement('li');
   const taskText = document.createTextNode(taskInput.value);
   
@@ -46,33 +45,34 @@ function addTask(e) {
   li.appendChild(taskText);
 
   taskList.appendChild(li);
-
-  e.preventDefault();
 }
 ```
 * Display Task and Remove X link
 ```
 function addTask(e) {
-  if(taskInput.value === '') {
-    alert('Task is missing');
-    return;
-  }
 
-  const li = document.createElement('li');
-  const taskText = document.createTextNode(taskInput.value);
   const link = document.createElement('a');
 
-  li.className = 'collection-item';
-  li.appendChild(taskText);
   link.className = 'delete-item secondary-content';
   link.innerHTML = '<i class="fa fa-remove"></i>';
   li.appendChild(link);
 
-  taskList.appendChild(li);
-
   taskInput.value = '';
-
-  e.preventDefault();
 }
 ```
+* Remove single task logic
+  * Add event listner
+  ```
+  taskList.addEventListener('click', removeTask);
+  ```
+  * create function `removeTask()`
+  ```
+  function removeTask(e) {
+    if(e.target.parentElement.classList.contains('delete-item')) {
+      if(confirm('Deleting task are you eh?')) {
+        e.target.parentElement.parentElement.remove();
+      }
+    }
+  }
+  ```
 * 

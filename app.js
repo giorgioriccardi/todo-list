@@ -11,12 +11,14 @@ loadEventListeners();
 function loadEventListeners() {
   // Add task form event
   form.addEventListener('submit', addTask);
+  // Remove task from list
+  taskList.addEventListener('click', removeTask);
 }
 
 // Add Task
 function addTask(e) {
   if(taskInput.value === '') {
-    alert('Task is missing');
+    alert('Task text is missing');
     // prevent creation of an empty node
     return;
   }
@@ -30,8 +32,9 @@ function addTask(e) {
   li.className = 'collection-item';
   // Create textNode and append to li
   li.appendChild(taskText);
-  console.log(taskText);
-  console.log(li);
+  // console.log(taskText);
+  // console.log(li);
+  
   // Create link remove X
   link.className = 'delete-item secondary-content'; // Materialize CSS
   // Add FA icon X
@@ -46,4 +49,15 @@ function addTask(e) {
   taskInput.value = '';
 
   e.preventDefault();
+}
+
+// Remove Tasks
+function removeTask(e) {
+  if(e.target.parentElement.classList.contains('delete-item')) {
+    console.log(e.target.parentElement.parentElement);
+    if(confirm('Deleting task are you eh?')) {
+      // parent of the parent: i > a > li
+      e.target.parentElement.parentElement.remove();
+    }
+  }
 }
