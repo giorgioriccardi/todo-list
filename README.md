@@ -60,7 +60,7 @@ function addTask(e) {
   taskInput.value = '';
 }
 ```
-* Remove single task logic
+* Remove single task - logic
   * Add event listner
   ```
   taskList.addEventListener('click', removeTask);
@@ -72,6 +72,19 @@ function addTask(e) {
       if(confirm('Deleting task are you eh?')) {
         e.target.parentElement.parentElement.remove();
       }
+    }
+  }
+  ```
+* Clear all tasks - logic
+  * Add event listner
+  ```
+  clearBtn.addEventListener('click', clearTasks);
+  ```
+  * create function `clearTasks()`
+  ```
+  function clearTasks() {
+    while(taskList.firstChild) {
+      taskList.removeChild(taskList.firstChild)
     }
   }
   ```
