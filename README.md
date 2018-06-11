@@ -113,4 +113,19 @@ function addTask(e) {
   ```
 ### Local Storage
 
+* Create a function `storeTaskInLocalStorage(task)`
+  ```
+  function storeTaskInLocalStorage(task) {
+    let tasks;
+    const localStorageTasks = localStorage.getItem(tasks);
+    if (localStorageTasks === null) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorageTasks);
+    }
+    tasks.push(task);
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+  ```
+* Call `storeTaskInLocalStorage(taskInput.value)` into `addTask()`
 * 

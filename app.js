@@ -49,11 +49,32 @@ function addTask(e) {
   // Add li to ul parent
   taskList.appendChild(li);
 
+  // Store Tasks in LocalStorage
+  storeTaskInLocalStorage(taskInput.value);
+
   // Clear input or X won't display
   taskInput.value = '';
 
   e.preventDefault();
 } // end Add Task
+
+// Store Task in LocalStorage
+function storeTaskInLocalStorage(task) {
+  let tasks;
+  const localStorageTasks = localStorage.getItem(tasks);
+  if (localStorageTasks === null) {
+    tasks = [];
+  } else {
+    // LS can only store strings, so we need to parse and convert the tasks[] array
+    tasks = JSON.parse(localStorageTasks);
+  }
+
+  // push the task to the tasks[] array
+  tasks.push(task);
+  
+  // set it back to LS as a string
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
 // Remove Tasks
 function removeTask(e) {
