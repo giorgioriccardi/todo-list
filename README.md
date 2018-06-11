@@ -38,16 +38,14 @@ function addTask(e) {
 function addTask(e) {
   if(taskInput.value === '') {
     alert('Task is missing');
-    return;
-  }
+  } else {
+    const li = document.createElement('li');
+    const taskText = document.createTextNode(taskInput.value);
+    
+    li.className = 'collection-item';
+    li.appendChild(taskText);
 
-  const li = document.createElement('li');
-  const taskText = document.createTextNode(taskInput.value);
-  
-  li.className = 'collection-item';
-  li.appendChild(taskText);
-
-  taskList.appendChild(li);
+    taskList.appendChild(li);
 }
 ```
 * Display Task and Remove X link
@@ -113,19 +111,45 @@ function addTask(e) {
   ```
 ### Local Storage
 
-* Create a function `storeTaskInLocalStorage(task)`
+* **Store** data into LS
+  * Create a function `storeTaskInLocalStorage(task)`
+    ```
+    function storeTaskInLocalStorage(task) {
+      let tasks;
+      const localStorageTasks = localStorage.getItem('tasks');
+      if (localStorageTasks === null) {
+        tasks = [];
+      } else {
+        tasks = JSON.parse(localStorageTasks);
+      }
+      tasks.push(task);
+      localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+    ```
+  * Call `storeTaskInLocalStorage(taskInput.value)` into `addTask()`
+  * Add an eventListener directly in the document `document.addEventListener('DOMContentLoaded', getTasksFromLocalStorage)`
+* **Retrieve** data from LS
+  * Create a function `getTasksFromLocalStorage()`
   ```
-  function storeTaskInLocalStorage(task) {
+  function getTasksFromLocalStorage() {
     let tasks;
-    const localStorageTasks = localStorage.getItem(tasks);
+    const localStorageTasks = localStorage.getItem('tasks');
     if (localStorageTasks === null) {
       tasks = [];
     } else {
       tasks = JSON.parse(localStorageTasks);
     }
-    tasks.push(task);
-    localStorage.setItem('tasks', JSON.stringify(tasks));
+    tasks.forEach(function(task) {
+      const li = document.createElement('li');
+      const taskText = document.createTextNode(task);
+      const link = document.createElement('a');
+      li.className = 'collection-item';
+      li.appendChild(taskText);
+      link.className = 'delete-item secondary-content'; // Materialize CSS
+      link.innerHTML = '<i class="fa fa-remove"></i>'; // x
+      li.appendChild(link);
+      taskList.appendChild(li);
+    });
   }
   ```
-* Call `storeTaskInLocalStorage(taskInput.value)` into `addTask()`
 * 

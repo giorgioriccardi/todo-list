@@ -9,6 +9,8 @@ const taskInput = document.querySelector('#task');
 loadEventListeners();
 
 function loadEventListeners() {
+  // DOM Load event
+  document.addEventListener('DOMContentLoaded', getTasksFromLocalStorage);
   // Add task form event
   form.addEventListener('submit', addTask);
   // Remove task from list
@@ -19,41 +21,72 @@ function loadEventListeners() {
   filter.addEventListener('keyup', filterTasks);
 }
 
-// Add Task
-function addTask(e) {
-  if(taskInput.value === '') {
-    alert('Task text is missing');
-    // prevent creation of an empty node
-    return;
+// Get Tasks from LS
+function getTasksFromLocalStorage() {
+  let tasks;
+  const localStorageTasks = localStorage.getItem('tasks');
+  if (localStorageTasks === null) {
+    tasks = [];
+  } else {
+    // LS can only store strings, so we need to parse and convert the tasks[] array
+    tasks = JSON.parse(localStorageTasks);
   }
 
+  tasks.forEach(function(task) {
+    // Create DOM element
+    const li = document.createElement('li');
+    const taskText = document.createTextNode(task);
+    const link = document.createElement('a');
+
+    // Add a class
+    li.className = 'collection-item';
+    // Create textNode and append to li
+    li.appendChild(taskText);
+    // Create link remove X
+    link.className = 'delete-item secondary-content'; // Materialize CSS
+    // Add FA icon X
+    link.innerHTML = '<i class="fa fa-remove"></i>'; // x
+    // Append remove link to li
+    li.appendChild(link);
+    // Add li to ul parent
+    taskList.appendChild(li);
+  });
+}
+
+// Add Task
+function addTask(e) {
   // Create li+link element
   const li = document.createElement('li');
   const taskText = document.createTextNode(taskInput.value);
   const link = document.createElement('a');
 
-  // Add a class
-  li.className = 'collection-item';
-  // Create textNode and append to li
-  li.appendChild(taskText);
-  // console.log(taskText);
-  // console.log(li);
-  
-  // Create link remove X
-  link.className = 'delete-item secondary-content'; // Materialize CSS
-  // Add FA icon X
-  link.innerHTML = '<i class="fa fa-remove"></i>'; // x
-  // Append remove link to li
-  li.appendChild(link);
+  if (taskInput.value === '') {
+    alert('Task text is missing');
+    // prevent display/storage of an empty node/value
+  } else {
+    // Add a class
+    li.className = 'collection-item';
+    // Create textNode and append to li
+    li.appendChild(taskText);
+    // console.log(taskText);
+    // console.log(li);
+    
+    // Create link remove X
+    link.className = 'delete-item secondary-content'; // Materialize CSS
+    // Add FA icon X
+    link.innerHTML = '<i class="fa fa-remove"></i>'; // x
+    // Append remove link to li
+    li.appendChild(link);
 
-  // Add li to ul parent
-  taskList.appendChild(li);
+    // Add li to ul parent
+    taskList.appendChild(li);
 
-  // Store Tasks in LocalStorage
-  storeTaskInLocalStorage(taskInput.value);
+    // Store Tasks in LocalStorage
+    storeTaskInLocalStorage(taskInput.value);
 
-  // Clear input or X won't display
-  taskInput.value = '';
+    // Clear input or X won't display
+    taskInput.value = '';
+  }
 
   e.preventDefault();
 } // end Add Task
@@ -61,7 +94,7 @@ function addTask(e) {
 // Store Task in LocalStorage
 function storeTaskInLocalStorage(task) {
   let tasks;
-  const localStorageTasks = localStorage.getItem(tasks);
+  const localStorageTasks = localStorage.getItem('tasks');
   if (localStorageTasks === null) {
     tasks = [];
   } else {
@@ -78,9 +111,9 @@ function storeTaskInLocalStorage(task) {
 
 // Remove Tasks
 function removeTask(e) {
-  if(e.target.parentElement.classList.contains('delete-item')) {
+  if (e.target.parentElement.classList.contains('delete-item')) {
     console.log(e.target.parentElement.parentElement);
-    if(confirm('Deleting task are you eh?')) {
+    if (confirm('Deleting task are you eh?')) {
       // parent of the parent: i > a > li
       e.target.parentElement.parentElement.remove();
     }
@@ -89,7 +122,7 @@ function removeTask(e) {
 
 // Clear Tasks
 function clearTasks() {
-  while(taskList.firstChild) {
+  while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild)
   }
 }
@@ -106,7 +139,7 @@ function filterTasks(e) {
   collectionItem.forEach(function(task) {
     const item = task.firstChild.textContent;
     // if there is no match the result will be -1
-    if(item.toLowerCase().indexOf(text) != -1) {
+    if (item.toLowerCase().indexOf(text) != -1) {
       task.style.display = 'block';
     } else {
       task.style.display = 'none';
