@@ -2,6 +2,9 @@
 A plain JS todo-list application
 
 ## Step by step guide
+
+### Build UI
+
 * `index.html` HTML initial structure with [Materialize CSS](https://materializecss.com/) and [Bootstrap 4](https://getbootstrap.com/)
 
 **Note** Materialize CSS requires jQuery, not the `todo-list` application!
@@ -88,4 +91,26 @@ function addTask(e) {
     }
   }
   ```
+* Filter tasks - logic
+  * Add event listner
+  ```
+  filter.addEventListener('keyup', filterTasks);
+  ```
+  * create function `filterTasks()`
+  ```
+  function filterTasks(e) {
+    const text = e.target.value.toLowerCase();
+    const collectionItem = document.querySelectorAll('.collection-item');
+    collectionItem.forEach(function(task) {
+      const item = task.firstChild.textContent;
+      if(item.toLowerCase().indexOf(text) != -1) {
+        task.style.display = 'block';
+      } else {
+        task.style.display = 'none';
+      }
+    });
+  }
+  ```
+### Local Storage
+
 * 
