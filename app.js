@@ -113,14 +113,12 @@ function storeTaskInLocalStorage(task) {
 function removeTask(e) {
   if (e.target.parentElement.classList.contains('delete-item')) {
     // console.log(e.target.parentElement.parentElement);
-    if (confirm('Deleting task are you eh?')) {
-      // parent of the parent: i > a > li
-      e.target.parentElement.parentElement.remove();
+    // parent of the parent: i > a > li
+    e.target.parentElement.parentElement.remove();
 
-      // Remove from LS
-      // there is no .class or #id for the generated li, so we have to target the element itself
-      removeTaskFromLocalStorage(e.target.parentElement.parentElement);
-    }
+    // Remove from LS
+    // there is no .class or #id for the generated li, so we have to target the element itself
+    removeTaskFromLocalStorage(e.target.parentElement.parentElement);
   }
 }
 
@@ -141,7 +139,8 @@ function removeTaskFromLocalStorage(taskItem) {
   tasks.forEach(function(task, index) {
     // if the task equals the text of the task we want to remove
     if (taskItem.textContent === task) {
-      // remove from the tasks array the one with index 1
+      console.info('[ ' + index + ' ]');
+      // remove from the tasks array only 1 selected in index
       tasks.splice(index, 1);
     }
   });
@@ -154,6 +153,20 @@ function removeTaskFromLocalStorage(taskItem) {
 function clearTasks() {
   while (taskList.firstChild) {
     taskList.removeChild(taskList.firstChild)
+  }
+
+  // Nuke ALL tasks from LS
+  nukeTasksFromLocalStorage();
+}
+
+
+// Nuke ALL tasks from LS
+function nukeTasksFromLocalStorage() {
+  if (confirm('Deleting ALL tasks are you, eh?')) {
+    localStorage.clear();
+  } else {
+    // leave tasks listed
+    getTasksFromLocalStorage(); 
   }
 }
 

@@ -7,15 +7,22 @@
   <!-- Compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-  <title>TODO-Task List</title>
+  <title>Todo/Task List - ES6 - 2018</title>
 </head>
 <body>
     <div class="container">
       <div class="row">
         <div class="col s12">
+          <div>
+            <h3 class="title">
+              A plain simple ES6 todo-list application
+            </h3>
+            <p>This app stores data into your browser Local Storage. If you wipe the cache all the tasks will be gone for good!</p>
+            <p>The next version will implement MongoDB storage</p>
+          </div>
           <div id="main" class="card">
             <div class="card-content">
-              <span class="card-title">Task List</span>
+              <span class="card-title">Todo List</span>
               <div class="row">
                 <form id="task-form">
                   <div class="input-field col s12">
@@ -35,13 +42,14 @@
               <ul class="collection">
                 <!-- <li>Li are generated dinamically</li> -->
               </ul>
-              <a href="#" class="clear-tasks btn btn-danger red" data-toggle="tooltip" data-placement="right" title="!! All taks will be lost for good!">Nuke them all</a>
+              <a href="#" class="clear-tasks btn btn-danger red" data-toggle="tooltip" data-placement="right" title="!! All tasks will be lost for good!">Nuke them all</a>
             </div>
           </div>
         </div>
       </div>
     </div>
 
+  <!-- jQuery is required by MaterializeCSS, not by this plain ES6 app -->
   <script
   src="https://code.jquery.com/jquery-3.2.1.js"
   integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
