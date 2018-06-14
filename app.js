@@ -112,12 +112,42 @@ function storeTaskInLocalStorage(task) {
 // Remove Tasks
 function removeTask(e) {
   if (e.target.parentElement.classList.contains('delete-item')) {
-    console.log(e.target.parentElement.parentElement);
+    // console.log(e.target.parentElement.parentElement);
     if (confirm('Deleting task are you eh?')) {
       // parent of the parent: i > a > li
       e.target.parentElement.parentElement.remove();
+
+      // Remove from LS
+      // there is no .class or #id for the generated li, so we have to target the element itself
+      removeTaskFromLocalStorage(e.target.parentElement.parentElement);
     }
   }
+}
+
+// Remove Task from LS
+function removeTaskFromLocalStorage(taskItem) {
+  // console.log(taskItem);
+  // Store the tasks in a variable
+  let tasks;
+  const localStorageTasks = localStorage.getItem('tasks');
+  // check if the task is null
+  if (localStorageTasks === null) {
+    tasks = [];
+  } else {
+    // LS can only store strings, so we need to parse and convert the tasks[] array
+    tasks = JSON.parse(localStorageTasks);
+  }
+
+  tasks.forEach(function(task, index) {
+    // if the task equals the text of the task we want to remove
+    if (taskItem.textContent === task) {
+      // remove from the tasks array the one with index 1
+      tasks.splice(index, 1);
+    }
+  });
+  
+  // re-set LS
+  localStorage.setItem('tasks', JSON.stringify(tasks));
 }
 
 // Clear Tasks

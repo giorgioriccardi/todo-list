@@ -99,6 +99,7 @@ function addTask(e) {
   function filterTasks(e) {
     const text = e.target.value.toLowerCase();
     const collectionItem = document.querySelectorAll('.collection-item');
+
     collectionItem.forEach(function(task) {
       const item = task.firstChild.textContent;
       if(item.toLowerCase().indexOf(text) != -1) {
@@ -117,12 +118,15 @@ function addTask(e) {
     function storeTaskInLocalStorage(task) {
       let tasks;
       const localStorageTasks = localStorage.getItem('tasks');
+
       if (localStorageTasks === null) {
         tasks = [];
       } else {
         tasks = JSON.parse(localStorageTasks);
       }
+
       tasks.push(task);
+
       localStorage.setItem('tasks', JSON.stringify(tasks));
     }
     ```
@@ -134,22 +138,45 @@ function addTask(e) {
   function getTasksFromLocalStorage() {
     let tasks;
     const localStorageTasks = localStorage.getItem('tasks');
+
     if (localStorageTasks === null) {
       tasks = [];
     } else {
       tasks = JSON.parse(localStorageTasks);
     }
+
     tasks.forEach(function(task) {
       const li = document.createElement('li');
       const taskText = document.createTextNode(task);
       const link = document.createElement('a');
+      
       li.className = 'collection-item';
       li.appendChild(taskText);
-      link.className = 'delete-item secondary-content'; // Materialize CSS
-      link.innerHTML = '<i class="fa fa-remove"></i>'; // x
+      link.className = 'delete-item secondary-content';
+      link.innerHTML = '<i class="fa fa-remove"></i>';
       li.appendChild(link);
       taskList.appendChild(li);
     });
   }
   ```
-* 
+* **Delete** data from LS
+  * Create a function `removeTaskFromLocalStorage()`
+  ```
+  function removeTaskFromLocalStorage(taskItem) {
+    let tasks;
+    const localStorageTasks = localStorage.getItem('tasks');
+    if (localStorageTasks === null) {
+      tasks = [];
+    } else {
+      tasks = JSON.parse(localStorageTasks);
+    }
+
+    tasks.forEach(function(task, index) {
+      if (taskItem.textContent === task) {
+        tasks.splice(index, 1);
+      }
+    });
+    
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+  }
+  ```
